@@ -26,13 +26,14 @@ document.addEventListener("DOMContentLoaded", e=>{
       async function fetchOneStudent (){
         let response = await fetch(studentUrl)
         let data = await response.json()
-        let host_student =  data.filter(student =>(student.id === id))
-        // console.log(host_student[0])
+        let host_student =  data.filter(student =>( student.id === id))
+        console.log(host_student[0])
 
         let hostZoomURL = host_student[0].zoom_meeting_url
         let hostMeetingId = host_student[0].zoom_meeting_id
         let hostMeetingPassword = host_student[0].zoom_meeting_password
 
+        // debugger
         meetingForm.display_name.value = hostZoomURL
         meetingForm.meeting_number.value = hostMeetingId
         meetingForm.meeting_pwd.value = hostMeetingPassword
@@ -41,12 +42,21 @@ document.addEventListener("DOMContentLoaded", e=>{
             meetingForm.addEventListener("submit", e=>{
           
             e.preventDefault()
+            // on click join iFrame - window pops up,
+            //student.status = flase
+            //PATCH request to student
+
+            //on click on "red button(cancel call in iFrame)"
+            //student.status = active
+            //no patch request - action happens in back end
+            //GET reqest to RAILS
 
              console.log("click form")
-             //post request to API
 
             
             })//form
+
+
         
          }//fetchOne Student
          fetchOneStudent()
