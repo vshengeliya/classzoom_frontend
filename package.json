@@ -1,0 +1,33 @@
+{
+  "name": "project-zoom",
+  "version": "0.0.1",
+  "description": "Student project with Veronika (@vshengeliya)",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"http-server -a 0.0.0.0 -p 9999 -c-1 -o index.html\"",
+    "https": "concurrently \"http-server -a 0.0.0.0 -p 9999 -c-1 -S -C localhost.crt -K localhost.key -o https://localhost:9999/index.html\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylejb/Project-Zoom_frontend.git"
+  },
+  "keywords": [
+    "remote",
+    "zoom",
+    "zoom",
+    "api"
+  ],
+  "author": "Kyle (@kylejb) and Veronika (@vshengeliya)",
+  "license": "https://github.com/kylejb/Project-Zoom_frontend#license",
+  "bugs": {
+    "url": "https://github.com/kylejb/Project-Zoom_frontend/issues"
+  },
+  "homepage": "https://github.com/kylejb/Project-Zoom_frontend#readme",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "dependencies": {
+    "@zoomus/websdk": "^1.7.10"
+  }
+}

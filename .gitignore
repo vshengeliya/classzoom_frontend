@@ -1,1 +1,9 @@
+# Tokens
 *.env
+config.js
+
+# Packages
+/node_modules/*
+package-lock.json
+yarn.lock
+.vscode
