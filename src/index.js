@@ -1,4 +1,42 @@
 document.addEventListener("DOMContentLoaded", e=>{
+
+    let navBar = document.querySelector("#nav-tool")
+    navBar.remove()
+
+    let welcome = document.querySelector("#welcome")
+    welcome.innerHTML =`
+    <div class="container">
+    <form class="add-toy-form">
+      <h3>Welcome to FlatIron School!</h3>
+
+      <input
+        type="text"
+        name="name"
+        value=""
+        placeholder="Enter your name..."
+        class="input-text"/>
+      <br/>
+      <input
+        type="text"
+        name="email"
+        value=""
+        placeholder="Enter your email"
+        class="input-text"/>
+      <br/><br/>
+      <input
+        type="submit"
+        name="submit"
+        value="Enter the Classroom"
+        class="submit"/>
+    </form>
+  </div>
+    `
+
+    
+
+    
+
+
        
     const studentUrl = "http://localhost:3000/students"
     const studentUl = document.getElementById("students")
