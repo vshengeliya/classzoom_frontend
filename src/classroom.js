@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", e=>{
-    
+    document.styleSheets[53].disabled = true;
+
     const studentUrl = "http://localhost:3000/students"
     const meetingsUrl = "http://localhost:3000/meetings"
     const studentUl = document.getElementById("students")
@@ -12,8 +13,8 @@ document.addEventListener("DOMContentLoaded", e=>{
     
          welcomeForm.innerHTML =`
          <div class="container">
-         <form class="add-toy-form">
-           <h3>Welcome to FlatIron School!</h3>
+         <form class="student-signin-form">
+           <h3>Welcome to Flatiron School!</h3>
     
            <input
              type="text"
@@ -128,17 +129,9 @@ document.addEventListener("DOMContentLoaded", e=>{
             
             console.log("click form")          
             
-        })//form  
+            })//form  
         
-    }//fetchOne Student
-    fetchOneStudent()
-})//evenListener
-
-
-
-
-
-
-
-
+        }//fetchOne Student
+        fetchOneStudent()
+    })//evenListener
 })//Content Loaded

@@ -1,0 +1,14 @@
+## Editor and Package Managers
+node_modules
+yarn.lock
+package-lock.json
+.vscode
+
+## Keys
+*.env
+*.key
+*.crt
+
+## OS files
+.DS_Store
+
