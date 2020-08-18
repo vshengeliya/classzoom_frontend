@@ -3,34 +3,72 @@ document.addEventListener("DOMContentLoaded", e=>{
     let navBar = document.querySelector("#nav-tool")
     navBar.remove()
 
-    let welcome = document.querySelector("#welcome")
-    welcome.innerHTML =`
-    <div class="container">
-    <form class="add-toy-form">
-      <h3>Welcome to FlatIron School!</h3>
+    function welcomeUser(){
+    
+        let welcomeForm = document.querySelector("#welcome")
+         welcomeForm.innerHTML =`
+         <div class="container">
+         <form class="add-toy-form">
+           <h3>Welcome to FlatIron School!</h3>
+        
+           <input
+             type="text"
+             name="name"
+             value=""
+             placeholder="Enter your name"
+             class="input-text"/>
+           <br/>
+           <input
+             type="text"
+             name="email"
+             value=""
+             placeholder="Enter your email"
+             class="input-text"/>
+           <br/><br/>
+           <input
+             type="submit"
+             name="submit"
+             value="Enter the Classroom"
+             class="submit"/>
+         </form>
+        </div>
+         `
+         welcomeForm.addEventListener("submit", e=>{
+        
+             e.preventDefault()
+             let name = e.target.name.value
+             let email = e.target.email.value
 
-      <input
-        type="text"
-        name="name"
-        value=""
-        placeholder="Enter your name..."
-        class="input-text"/>
-      <br/>
-      <input
-        type="text"
-        name="email"
-        value=""
-        placeholder="Enter your email"
-        class="input-text"/>
-      <br/><br/>
-      <input
-        type="submit"
-        name="submit"
-        value="Enter the Classroom"
-        class="submit"/>
-    </form>
-  </div>
-    `
+             let body = {
+                 name: name,
+                 email: email,
+                 zoom_meeting_id: null,
+                 zoom_meeting_password:null,
+                 zoom_meeting_time: null,
+                 zoom_meeting_length: null      
+             }  
+             const options = {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json',
+                     'Accept': 'application/json',
+                 },
+                 'body': JSON.stringify(body)
+             }  
+             fetch(studentUrl, options)
+             .then(data =>{
+                 let welcomeForm = document.querySelector("#welcome")
+                 welcomeForm.reset()
+             })
+         })//welcomeForm eventL
+    }//f welcomeUser
+
+    welcomeUser()
+
+
+    
+
+
 
     
 
