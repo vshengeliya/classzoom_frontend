@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", e=>{
     document.styleSheets[53].disabled = true;
+    let signedUser;
     
     const studentUrl = "http://localhost:3000/students"
     const meetingsUrl = "http://localhost:3000/meetings"
@@ -57,9 +58,7 @@ document.addEventListener("DOMContentLoaded", e=>{
                 //     console.log(liName)
                 
 
-                 
-          
-
+                
                  //fetch the current user from the DB we use for testing purposes
                  //color the user different color
         
@@ -92,35 +91,41 @@ document.addEventListener("DOMContentLoaded", e=>{
                               //       }
                               //    
                               let userInfo = document.querySelector(".dropdown-menu")
-
+                              
                               let updateName = document.getElementById("update_name")
                               updateName.addEventListener("click", e=>{
                                   console.log("update")
                                   let userName = document.createElement('li')
+                                  
                                   userName.innerHTML=`
                                   <form>
-                                    <label for="name">Name:</label>
-                                    <input type="text" id="name" name="name"><br><br>
-                                    <input type="submit" value="Submit">
-                                </form>
+                                  <label for="name">Name:</label>
+                                  <input type="text" id="name" name="name"><br><br>
+                                  <input type="submit" value="Submit">
+                                  </form>
                                   `
                                   updateName.appendChild(userName)
+                                  document.querySelector(".dropdown-menu").classList.add("show")
 
                                   //FINISH PATCH when updateName+ update the DOM
-                
+                                  
                                 })
                                 let updateEmail = document.getElementById("update_email")
                                 updateEmail.addEventListener("click", e=>{
                                     console.log("email")
-                                    let userEmail = document.createElement('li')
-                                  userEmail.innerHTML=`
-                                  <form>
+                                                                
+                                    updateEmail.innerHTML=`
+                                  <form class ="dropdown show">
                                     <label for="email">Email:</label>
                                     <input type="text" id="email" name="email"><br><br>
                                     <input type="submit" value="Submit">
                                 </form>
                                   `
-                                  updateEmail.appendChild(userEmail)
+                                let dropdown = document.querySelector(".dropdown")
+                                dropdown.className = "dropdown show"
+                                
+                                let show = document.querySelector(".dropdown-menu")
+                                show.classList.add("show")
 
                                   //FINISH PATCH when updateEmail
                                 })
@@ -163,35 +168,34 @@ document.addEventListener("DOMContentLoaded", e=>{
                 welcomeUser()
                 
             
-                    async function fetchStudents (name){
-                        
-                        let response = await fetch(studentUrl)
-                        let data = await response.json()
-                        // console.log(data)
-                        
-                        data.forEach(student =>{
-            
-                            if(student.name === name){
-                                currentUser(name)
-                            }else{
-                                let div = document.createElement('div')
-                                div.dataset.id = `${student.id}`
-                                div.id = "rectangle"
-                                div.innerText = `${student.name}` 
-                                studentUl.appendChild(div)
-                            }
-                        }) 
-                    }
-            function currentUser(name){
+    async function fetchStudents (name){
+        
+        let response = await fetch(studentUrl)
+        let data = await response.json()
+        // console.log(data)
+        
+        data.forEach(student =>{
+            if(student.name === name){
 
+                currentUser(student)
+            }else{
                 let div = document.createElement('div')
-                 div.innerText= name
-                 studentUl.appendChild(div)
-                 div.style.color = 'green'
-             
+                div.dataset.id = `${student.id}`
+                div.id = "rectangle"
+                div.innerText = `${student.name}` 
+                studentUl.appendChild(div)
             }
+        }) 
+    }
 
-
+    function currentUser(studentObj){
+        signedUser = studentObj
+        let div = document.createElement('div')
+         div.innerText= studentObj.name
+         studentUl.appendChild(div)
+         div.style.color = 'green'
+     
+    }
      
     studentUl.addEventListener("click", e=>{
         const meetingForm = document.getElementById("meeting_form")
@@ -238,8 +242,6 @@ document.addEventListener("DOMContentLoaded", e=>{
         }//fetchOne Student
         fetchOneStudent()
     })//evenListener
-
-
 
 
 })//Content Loaded
