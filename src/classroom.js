@@ -121,14 +121,16 @@ document.addEventListener("DOMContentLoaded", e=>{
                                             },
                                         body: JSON.stringify({name: newName})
                                         }  
-                                        fetch(`studentUrl/${signedUser.id}`, options)
+                                        fetch(`${studentUrl}/${signedUser.id}`, options)
+                                        .then(resp => resp.json())
                                         .then (data => {
-                                            signedUser.userName = newName
+                                            signedUser.name = data.name
+                                            document.querySelector(`[data-id="${signedUser.id}"]`).textContent = data.name
+                                            updateForm.remove()
                                         })
                                 })
 
-                            }else if (e.target.matches("#update_email")){
-                                e.preventDefault()
+                            } else if (e.target.matches("#update_email")){
                             
                                 let updateForm = document.createElement('form')
                                 updateForm.innerHTML =`
@@ -139,6 +141,7 @@ document.addEventListener("DOMContentLoaded", e=>{
                                 bodyHTML.appendChild(updateForm)
 
                                 updateForm.addEventListener("submit", e=>{
+                                    e.preventDefault()
 
                                     let newEmail = e.target.email.value
 
@@ -150,20 +153,24 @@ document.addEventListener("DOMContentLoaded", e=>{
                                             },
                                         body: JSON.stringify({email: newEmail})
                                         }  
-                                        fetch(`studentUrl/${signedUser.id}`, options)
-                                        updateForm.reset()
+                                        fetch(`${studentUrl}/${signedUser.id}`, options)
+                                        .then(resp => resp.json())
+                                        .then (data => {
+                                            signedUser.name = data.email
+                                            updateForm.remove()
+                                        })
                                 })
 
                             }else if (e.target.matches("#delete_user")) {
                                 e.preventDefault()
 
                                 const options = {method: 'DELETE'}
-                                fetch(studentUrl/`${signedUser.id}`, options)
+                                fetch(`${studentUrl}/${signedUser.id}`, options)
                                 .then(data =>{
-                                let activeUser = document.querySelectorAll(`[data-set="${signedUser.id}"]`)
+                                let activeUser = document.querySelector(`[data-id="${signedUser.id}"]`)
                                 activeUser.remove()// troubleshoot with real data
                                 })
-                                updateForm.reset()
+                                updateForm.remove()
                             }
 
                         })// userInfo event List
@@ -177,6 +184,7 @@ document.addEventListener("DOMContentLoaded", e=>{
                 // zoom_meeting_length: null      
                 }  
               
+             //! confirm that this POST should be for /meetings 
              const options = {
                      method: 'POST',
                      headers: {
@@ -185,7 +193,7 @@ document.addEventListener("DOMContentLoaded", e=>{
                          },
                      body: JSON.stringify(body)
                      }  
-                     fetch(studentUrl, options)//changed back to studentURL from meetingUrl
+                     // fetch(studentUrl, options)//changed back to studentURL from meetingUrl
 
                     //need to have a create controler in a back end to update the DB + ?create new meeting info?   
             
@@ -218,6 +226,8 @@ document.addEventListener("DOMContentLoaded", e=>{
     function currentUser(studentObj){
         signedUser = studentObj
         let div = document.createElement('div')
+         div.id = "rectangle"
+         div.dataset.id = studentObj.id
          div.innerText= studentObj.name
          studentUl.appendChild(div)
          div.style.color = 'green'
