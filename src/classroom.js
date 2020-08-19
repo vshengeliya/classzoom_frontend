@@ -45,6 +45,23 @@ document.addEventListener("DOMContentLoaded", e=>{
                  e.preventDefault()
                  let name = e.target.name.value
                  let email = e.target.email.value
+
+                //  currentUser(name)
+             
+                 fetchStudents(name)
+
+                //  let liName = studentUl.filter(student=>{
+                //     student.innertext === name})
+
+               
+                //     console.log(liName)
+                
+
+                 
+          
+
+                 //fetch the current user from the DB we use for testing purposes
+                 //color the user different color
         
              welcomeForm.remove()
              navBar.hidden = false
@@ -89,7 +106,7 @@ document.addEventListener("DOMContentLoaded", e=>{
                                   `
                                   updateName.appendChild(userName)
 
-                                  //FINISH PATCH when updateName
+                                  //FINISH PATCH when updateName+ update the DOM
                 
                                 })
                                 let updateEmail = document.getElementById("update_email")
@@ -110,7 +127,7 @@ document.addEventListener("DOMContentLoaded", e=>{
                                 let deleteUser = document.getElementById("delete_user")
                                 deleteUser.addEventListener("click", e=>{
                                     console.log("delete")
-                                    let student_id //need to locate the user id
+                                    let student_id //need to locate the user id user from DB fetched upon entering
                                     const options = {method: 'DELETE'}
                                     fetch(studentUrl/`${student_id}`, options)
                                     .then(data =>{
@@ -145,21 +162,36 @@ document.addEventListener("DOMContentLoaded", e=>{
                 
                 welcomeUser()
                 
-                fetchStudents()
-                    async function fetchStudents (){
+            
+                    async function fetchStudents (name){
+                        
                         let response = await fetch(studentUrl)
                         let data = await response.json()
-                        
-                        console.log(data)
+                        // console.log(data)
                         
                         data.forEach(student =>{
-                            let div = document.createElement('div')
-                            div.dataset.id = `${student.id}`
-                            div.id = "rectangle"
-                            div.innerText = `${student.name}` 
-                            studentUl.appendChild(div)
+            
+                            if(student.name === name){
+                                currentUser(name)
+                            }else{
+                                let div = document.createElement('div')
+                                div.dataset.id = `${student.id}`
+                                div.id = "rectangle"
+                                div.innerText = `${student.name}` 
+                                studentUl.appendChild(div)
+                            }
                         }) 
                     }
+            function currentUser(name){
+
+                let div = document.createElement('div')
+                 div.innerText= name
+                 studentUl.appendChild(div)
+                 div.style.color = 'green'
+             
+            }
+
+
      
     studentUl.addEventListener("click", e=>{
         const meetingForm = document.getElementById("meeting_form")
