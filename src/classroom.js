@@ -90,57 +90,84 @@ document.addEventListener("DOMContentLoaded", e=>{
                               //           userInfo.appendChild(userInfo)
                               //       }
                               //    
-                              let userInfo = document.querySelector(".dropdown-menu")
-                              
-                              let updateName = document.getElementById("update_name")
-                              updateName.addEventListener("click", e=>{
-                                  console.log("update")
-                                  let userName = document.createElement('li')
-                                  
-                                  userName.innerHTML=`
-                                  <form>
-                                  <label for="name">Name:</label>
-                                  <input type="text" id="name" name="name"><br><br>
-                                  <input type="submit" value="Submit">
-                                  </form>
-                                  `
-                                  updateName.appendChild(userName)
-                                  document.querySelector(".dropdown-menu").classList.add("show")
+                        let userInfo = document.querySelector(".dropdown-menu")
+                        // debugger
 
-                                  //FINISH PATCH when updateName+ update the DOM
-                                  
-                                })
-                                let updateEmail = document.getElementById("update_email")
-                                updateEmail.addEventListener("click", e=>{
-                                    console.log("email")
-                                                                
-                                    updateEmail.innerHTML=`
-                                  <form class ="dropdown show">
-                                    <label for="email">Email:</label>
-                                    <input type="text" id="email" name="email"><br><br>
-                                    <input type="submit" value="Submit">
-                                </form>
-                                  `
-                                let dropdown = document.querySelector(".dropdown")
-                                dropdown.className = "dropdown show"
+                        userInfo.addEventListener("click", e=>{
+
+                            // debugger
+
+                            if (e.target.matches("#update_name")){
                                 
-                                let show = document.querySelector(".dropdown-menu")
-                                show.classList.add("show")
+                                let updateForm = document.createElement('form')
+                                updateForm.innerHTML =`
+                                <label for="name" ></label>
+                                <input type="text" id="name" name="name" placeholder="Enter new name"><br><br>
+                                <input type="submit" value="Submit">
+                                `
+                                bodyHTML.appendChild(updateForm)
 
-                                  //FINISH PATCH when updateEmail
+                                updateForm.addEventListener("submit", e=>{
+
+                                    e.preventDefault()
+
+                                    let newName = e.target.name.value
+
+                                    const options = {
+                                        method: 'PATCH',
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                'Accept': 'application/json',
+                                            },
+                                        body: JSON.stringify({name: newName})
+                                        }  
+                                        fetch(`studentUrl/${signedUser.id}`, options)
+                                        .then (data => {
+                                            signedUser.userName = newName
+                                        })
                                 })
-                                let deleteUser = document.getElementById("delete_user")
-                                deleteUser.addEventListener("click", e=>{
-                                    console.log("delete")
-                                    let student_id //need to locate the user id user from DB fetched upon entering
-                                    const options = {method: 'DELETE'}
-                                    fetch(studentUrl/`${student_id}`, options)
-                                    .then(data =>{
-                                let currentUser = document.querySelectorAll(`[data-set="${student_id}"]`)
-                                currentUser.remove()// troubleshoot with real data
-                            })
-                    })
-    
+
+                            }else if (e.target.matches("#update_email")){
+                                e.preventDefault()
+                            
+                                let updateForm = document.createElement('form')
+                                updateForm.innerHTML =`
+                                <label for="email" ></label>
+                                <input type="text" id="email" name="email" placeholder="Enter new email"><br><br>
+                                <input type="submit" value="Submit">
+                                `
+                                bodyHTML.appendChild(updateForm)
+
+                                updateForm.addEventListener("submit", e=>{
+
+                                    let newEmail = e.target.email.value
+
+                                    const options = {
+                                        method: 'PATCH',
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                'Accept': 'application/json',
+                                            },
+                                        body: JSON.stringify({email: newEmail})
+                                        }  
+                                        fetch(`studentUrl/${signedUser.id}`, options)
+                                        updateForm.reset()
+                                })
+
+                            }else if (e.target.matches("#delete_user")) {
+                                e.preventDefault()
+
+                                const options = {method: 'DELETE'}
+                                fetch(studentUrl/`${signedUser.id}`, options)
+                                .then(data =>{
+                                let activeUser = document.querySelectorAll(`[data-set="${signedUser.id}"]`)
+                                activeUser.remove()// troubleshoot with real data
+                                })
+                                updateForm.reset()
+                            }
+
+                        })// userInfo event List
+
              let body = {
                 name: name,
                 email: email,
