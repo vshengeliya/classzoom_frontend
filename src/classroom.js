@@ -141,6 +141,7 @@ document.addEventListener("DOMContentLoaded", e=>{
                                 updateForm.addEventListener("submit", e=>{
 
                                     let newEmail = e.target.email.value
+                                    debugger
 
                                     const options = {
                                         method: 'PATCH',
