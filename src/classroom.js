@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", e => {
                     updateForm.remove()
                 }
             })// userInfo eventL
-            fetchEvenets()
+            fetchEvents()
         }) // welcomeForm eventL
     } // welcomeUser fn          
     welcomeUser()
@@ -240,8 +240,8 @@ document.addEventListener("DOMContentLoaded", e => {
         meetingForm.meeting_number.value = hostMeetingId
         meetingForm.meeting_pwd.value = hostMeetingPassword
               
-        meetingForm.addEventListener("submit", e=>{
-            e.preventDefault()
+        // meetingForm.addEventListener("submit", e=>{
+        //     e.preventDefault()
 
             // NO WINDOW POP UP!!!
 
@@ -258,13 +258,13 @@ document.addEventListener("DOMContentLoaded", e => {
             //no patch request - action happens in back end
             //GET reqest to RAILS
             
-            console.log("click form")          
-        })//form  
+           // console.log("click form")          
+        // })//form  
         }//fetchOne Student
         fetchOneStudent()
     })//eventListener
 
-   function fetchEvenets(){
+   function fetchEvents(){
         fetch(classroomUrl)
         .then(resp =>resp.json())
         // .then(data=>console.log(data.events))

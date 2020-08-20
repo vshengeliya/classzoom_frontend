@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 (function () {
+
   var testTool = window.testTool;
   if (testTool.isMobileDevice()) {
     vConsole = new VConsole();
