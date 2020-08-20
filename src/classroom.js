@@ -1,3 +1,5 @@
+// import axios from 'axios';
+
 document.addEventListener("DOMContentLoaded", e => {
     document.styleSheets[53].disabled = true;
     let signedUser;
@@ -48,6 +50,15 @@ document.addEventListener("DOMContentLoaded", e => {
             let email = e.target.email.value
 
             fetchStudents(name)
+            // TODO - incorporate post request to sessions controller for user Auth and localStorage of cookies
+            // instance = axios.create({
+            //     baseURL: 'http://localhost:3000',
+            //    });
+            //    instance
+            //     .post("/sessions", { email: "kb@kb.com", password: "password" })
+            //     .then(response => {
+            //         localStorage.setItem("loggedIn", JSON.stringify(response.data));
+            //     })
         
             welcomeForm.remove()
             navBar.hidden = false
@@ -66,7 +77,7 @@ document.addEventListener("DOMContentLoaded", e => {
                       </div>
                       </div>
                       `
-                    bodyHTML.appendChild(userDropdown)
+            bodyHTML.appendChild(userDropdown)
                     
                       //   userInfo.addEventListener("click", e=>{
                           
@@ -124,7 +135,7 @@ document.addEventListener("DOMContentLoaded", e => {
                     `
                     bodyHTML.appendChild(updateForm)
 
-                    updateForm.addEventListener("submit", e=>{
+                    updateForm.addEventListener("submit", e => {
                         e.preventDefault()
 
                         let newEmail = e.target.email.value
@@ -159,10 +170,8 @@ document.addEventListener("DOMContentLoaded", e => {
                 }
             })// userInfo eventL          
         }) // welcomeForm eventL
-    } // welcomeUser fn
-                
-        // welcomeUser()
-            
+    } // welcomeUser fn          
+    welcomeUser()
     //TODO- testing on Thursday with smaller seed-sample to be mindful of API call limits
     async function createMeetings() {
         const options = {
@@ -183,7 +192,6 @@ document.addEventListener("DOMContentLoaded", e => {
         
         data.forEach(student =>{
             if(student.name === name){
-
                 currentUser(student)
             } else {
                 let div = document.createElement('div')
@@ -203,7 +211,6 @@ document.addEventListener("DOMContentLoaded", e => {
          div.innerText= studentObj.name
          studentUl.appendChild(div)
          div.style.color = 'green'
-     
     }
      
     studentUl.addEventListener("click", e=>{
@@ -221,18 +228,18 @@ document.addEventListener("DOMContentLoaded", e => {
         let hostMeetingId = host_student[0].zoom_meeting_id
         let hostMeetingPassword = host_student[0].zoom_meeting_password
         
-               meetingForm.display_name.value = hostZoomName
+        meetingForm.display_name.value = hostZoomName
         meetingForm.meeting_number.value = hostMeetingId
         meetingForm.meeting_pwd.value = hostMeetingPassword
               
-            meetingForm.addEventListener("submit", e=>{
-                
-                e.preventDefault()
-                // NO WINDOW POP UP!!!
+        meetingForm.addEventListener("submit", e=>{
+            e.preventDefault()
 
-                // <div id=zmmtg-root>
-                // <span class="footer__leave-btn-text">Leave Meeting</span>
-                //on click hide div id=zmm, change the boolean 
+            // NO WINDOW POP UP!!!
+
+            // <div id=zmmtg-root>
+            // <span class="footer__leave-btn-text">Leave Meeting</span>
+            //on click hide div id=zmm, change the boolean 
 
             // on click join iFrame - window pops up,
             //student.status = flase
@@ -244,12 +251,8 @@ document.addEventListener("DOMContentLoaded", e => {
             //GET reqest to RAILS
             
             console.log("click form")          
-            
-            })//form  
-        
+        })//form  
         }//fetchOne Student
         fetchOneStudent()
     })//eventListener
-
-
 })//Content Loaded

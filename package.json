@@ -4,6 +4,7 @@
   "description": "Zoom sample app for web client WebSDK",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
