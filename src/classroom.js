@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", e => {
     
     const studentUrl = "http://localhost:3000/students"
     const meetingsUrl = "http://localhost:3000/meetings"
-    const classroomUrl = "http://localhost:3000/classrooms/2"
+    const classroomUrl = "http://localhost:3000/classrooms/11"
     const teacherUrl = "http://localhost:3000/teachers"
     
     
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", e => {
             } else {
                 let div = document.createElement('div')
                 div.dataset.id = `${student.id}`
-                div.id = "rectangle"
+                div.classList.add("student-desk")
                 div.innerText = `${student.name}` 
                 studentUl.appendChild(div)
             }
@@ -214,11 +214,11 @@ document.addEventListener("DOMContentLoaded", e => {
     function currentUser(studentObj){
         signedUser = studentObj
         let div = document.createElement('div')
-         div.id = "rectangle"
-         div.dataset.id = studentObj.id
-         div.innerText= studentObj.name
-         studentUl.appendChild(div)
-         div.style.color = 'green'
+        div.classList.add("student-desk")
+        div.dataset.id = studentObj.id
+        div.innerText= studentObj.name
+        studentUl.appendChild(div)
+        div.style.color = 'green'
     }
      
     studentUl.addEventListener("click", e=>{
@@ -227,18 +227,18 @@ document.addEventListener("DOMContentLoaded", e => {
         let id = parseInt(e.target.dataset.id)
         
         async function fetchOneStudent (){
-        let response = await fetch(studentUrl)
-        let data = await response.json()
-        let host_student =  data.filter(student =>( student.id === id))
-        console.log(host_student[0])
+            let response = await fetch(studentUrl)
+            let data = await response.json()
+            let host_student =  data.filter(student =>( student.id === id))
+            console.log(host_student[0])
 
-        let hostZoomName = host_student[0].name
-        let hostMeetingId = host_student[0].zoom_meeting_id
-        let hostMeetingPassword = host_student[0].zoom_meeting_password
-        
-        meetingForm.display_name.value = hostZoomName
-        meetingForm.meeting_number.value = hostMeetingId
-        meetingForm.meeting_pwd.value = hostMeetingPassword
+            let hostZoomName = host_student[0].name
+            let hostMeetingId = host_student[0].zoom_meeting_id
+            let hostMeetingPassword = host_student[0].zoom_meeting_password
+            
+            meetingForm.display_name.value = hostZoomName
+            meetingForm.meeting_number.value = hostMeetingId
+            meetingForm.meeting_pwd.value = hostMeetingPassword
               
         // meetingForm.addEventListener("submit", e=>{
         //     e.preventDefault()
