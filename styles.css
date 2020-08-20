@@ -2,6 +2,7 @@
     margin: 0;
     box-sizing: border-box;
     background-color: white;
+    /* background-image: url("https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png") */
 }
 
 .btn-primary{
@@ -27,9 +28,47 @@
 }
 
 .welcome-page{
+  
     display: flex;
     flex-flow: row wrap;
-    background-color: rgba(255, 255, 255, 0.3);
+    /* background-color: rgba(255, 255, 255, 0.3); */
+    /* background-image: url("https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png"); */
+}
+
+.image{
+  /* display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 40vh 30vh 30vh;
+  grid-gap: 10px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+
+  /* width: 100%;
+  height: 100%; */
+
+  /* border-radius: 4px;
+  background-color: hsl(0, 0%, 96%);
+  display: flex;
+  /* flex-flow: row nowrap; */
+  /* align-items: center; 
+  width: auto;
+  max-height: 300px;
+  padding: 0px 0px 0px 0px;
+  border: 20px solid black;
+  background-size: 100% 100% */ */ */
+
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+
 }
 
 .student-signin-form{

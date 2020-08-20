@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", e => {
     
     navBar.hidden = true
 
+    const welcomePage = document.querySelector(".welcome-page")
+    welcomePage.innerHTML =`
+    <img src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png">
+    `
+
 
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
@@ -66,6 +71,8 @@ document.addEventListener("DOMContentLoaded", e => {
          </form>
         </div>
          `
+
+         
         welcomeForm.addEventListener("submit", e=>{
             e.preventDefault()
             // TODO - change to email and password for auth flow
@@ -228,6 +235,7 @@ document.addEventListener("DOMContentLoaded", e => {
     }
             
     async function fetchStudents (name){
+        welcomePage.innerHTML =""
         
         let response = await fetch(studentUrl)
         let data = await response.json()
