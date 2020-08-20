@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", e => {
     const classroomUrl = "http://localhost:3000/classrooms/13"
     const teacherUrl = "http://localhost:3000/teachers"
     
-    
     const studentUl = document.getElementById("students")
     const navBar = document.querySelector("#nav-tool")
     const bodyHTML = document.getElementsByTagName('body')[0]
@@ -305,8 +304,7 @@ document.addEventListener("DOMContentLoaded", e => {
 
         .then(data => data.events.forEach(event=>{
 
-        
-           let  eventDiv = document.createElement('div')
+           let eventDiv = document.createElement('div')
            eventDiv.innerHTML= `
            
            <h3 style="color:Salmon;">${event.name}<h3/>
@@ -316,12 +314,9 @@ document.addEventListener("DOMContentLoaded", e => {
             <p style="color:CornflowerBlue;">${event.zoom_url}<p/>`
             
             bodyHTML.appendChild(eventDiv)
-        
-        }))
-        
+        })) 
     }//Fetch Events
     
-
     function fetchTeacher(){    
     fetch(teacherUrl)
     .then(resp =>resp.json())
