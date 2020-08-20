@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", e => {
                     updateForm.innerHTML =`
                     <label for="name" ></label>
                     <input type="text" id="name" name="name" placeholder="Enter new name"><br><br>
-                    <input type="submit" value="Submit">
+                    <input type="submit" class="btn btn-secondary" value="Submit">
                     `
                     bodyHTML.appendChild(updateForm)
 
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", e => {
                     updateForm.innerHTML =`
                     <label for="email" ></label>
                     <input type="text" id="email" name="email" placeholder="Enter new email"><br><br>
-                    <input type="submit" value="Submit">
+                    <input type="submit" class="btn btn-secondary" value="Submit">
                     `
                     bodyHTML.appendChild(updateForm)
 
