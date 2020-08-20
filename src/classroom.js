@@ -1,9 +1,14 @@
 document.addEventListener("DOMContentLoaded", e => {
+
     document.styleSheets[53].disabled = true;
     let signedUser;
     
     const studentUrl = "http://localhost:3000/students"
     const meetingsUrl = "http://localhost:3000/meetings"
+    const classroomUrl = "http://localhost:3000/classrooms/2"
+    const teacherUrl = "http://localhost:3000/teachers"
+    
+    
     const studentUl = document.getElementById("students")
     const navBar = document.querySelector("#nav-tool")
     const bodyHTML = document.getElementsByTagName('body')[0]
@@ -44,8 +49,10 @@ document.addEventListener("DOMContentLoaded", e => {
             e.preventDefault()
             let name = e.target.name.value
             let email = e.target.email.value
-
+            
             fetchStudents(name)
+            fetchTeacher()
+            
         
             welcomeForm.remove()
             navBar.hidden = false
@@ -64,22 +71,12 @@ document.addEventListener("DOMContentLoaded", e => {
                       </div>
                       </div>
                       `
-                    bodyHTML.appendChild(userDropdown)
-                    
-                      //   userInfo.addEventListener("click", e=>{
-                          
-                          //       if (userInfo.children[0].innerText === "Update_Name"){
-                              //           console.log("update")
-                              //           let userName = document.createElement('input')
-                              //           userName.innerText=""
-                              //           userInfo.appendChild(userInfo)
-                              //       }
-                              //    
-                let userInfo = document.querySelector(".dropdown-menu")
+                      bodyHTML.appendChild(userDropdown)
+                      
+                      let userInfo = document.querySelector(".dropdown-menu")
                 
                 userInfo.addEventListener("click", e=>{
-
-                    
+                 
                     if (e.target.matches("#update_name")){
                         
                         let updateForm = document.createElement('form')
@@ -89,9 +86,9 @@ document.addEventListener("DOMContentLoaded", e => {
                         <input type="submit" value="Submit">
                         `
                         bodyHTML.appendChild(updateForm)
-
+                        
                         updateForm.addEventListener("submit", e=>{
-
+                            
                             e.preventDefault()
 
                             let newName = e.target.name.value
@@ -115,7 +112,7 @@ document.addEventListener("DOMContentLoaded", e => {
                         })
 
                     } else if (e.target.matches("#update_email")){
-                    
+                        
                         let updateForm = document.createElement('form')
                         updateForm.innerHTML =`
                         <label for="email" ></label>
@@ -159,10 +156,12 @@ document.addEventListener("DOMContentLoaded", e => {
                     }
 
                 })// userInfo eventL          
+                fetchEvenets()
             }) // welcomeForm eventL
+            
         } // welcomeUser fn
-                
-                welcomeUser()
+    
+        welcomeUser()
             
     //TODO- testing on Thursday with smaller seed-sample to be mindful of API call limits
     async function createMeetings() {
@@ -184,7 +183,6 @@ document.addEventListener("DOMContentLoaded", e => {
         
         data.forEach(student =>{
             if(student.name === name){
-
                 currentUser(student)
             } else {
                 let div = document.createElement('div')
@@ -195,7 +193,6 @@ document.addEventListener("DOMContentLoaded", e => {
             }
         }) 
     }
-
     function currentUser(studentObj){
         signedUser = studentObj
         let div = document.createElement('div')
@@ -203,8 +200,7 @@ document.addEventListener("DOMContentLoaded", e => {
          div.dataset.id = studentObj.id
          div.innerText= studentObj.name
          studentUl.appendChild(div)
-         div.style.color = 'green'
-     
+         div.style.color = 'green'   
     }
      
     studentUl.addEventListener("click", e=>{
@@ -252,5 +248,42 @@ document.addEventListener("DOMContentLoaded", e => {
         fetchOneStudent()
     })//eventListener
 
+   function fetchEvenets(){
+        fetch(classroomUrl)
+        .then(resp =>resp.json())
+        // .then(data=>console.log(data.events))
+
+        .then(data => data.events.forEach(event=>{
+
+        
+           let  eventDiv = document.createElement('div')
+           eventDiv.innerHTML= `
+           
+           <h3 style="color:Salmon;">${event.name}<h3/>
+            <h4>${event.date}<h4/>
+            <h5>${event.time}<h5/>
+            <p>${event.description}<p/>
+            <p style="color:CornflowerBlue;">${event.zoom_url}<p/>`
+            
+            bodyHTML.appendChild(eventDiv)
+        
+        }))
+        
+    }//Fetch Events
+    
+
+    function fetchTeacher(){    
+    fetch(teacherUrl)
+    .then(resp =>resp.json())
+    .then(data => data.forEach(teacher =>{
+            let teacherUl = document.createElement('ul')
+            let teacherDiv = document.createElement('div')
+            teacherUl.appendChild(teacherDiv)
+            studentUl.insertAdjacentElement('beforebegin', teacherUl)
+            teacherDiv.innerText = `Class teacher: ${teacher.name}`
+            teacherDiv.style.color = 'BlueViolet'
+        }) 
+    )}
+    
 
 })//Content Loaded
