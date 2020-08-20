@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", e => {
             //     .then(response => {
             //         localStorage.setItem("loggedIn", JSON.stringify(response.data));
             //     })
+            //* to extract localStorage stuff -> JSON.parse(localStorage.getItem('loggedIn'))
         
             welcomeForm.remove()
             navBar.hidden = false
