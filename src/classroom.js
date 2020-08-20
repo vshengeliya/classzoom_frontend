@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", e => {
     const bodyHTML = document.getElementsByTagName('body')[0]
     
     navBar.hidden = true
+
+
     
     function welcomeUser(){
         let welcomeForm = document.querySelector("#welcome")
@@ -75,94 +77,91 @@ document.addEventListener("DOMContentLoaded", e => {
                               //           userInfo.appendChild(userInfo)
                               //       }
                               //    
-                let userInfo = document.querySelector(".dropdown-menu")
-                
-                userInfo.addEventListener("click", e=>{
-
+            let userInfo = document.querySelector(".dropdown-menu")
+            
+            userInfo.addEventListener("click", e=>{
+                if (e.target.matches("#update_name")){
                     
-                    if (e.target.matches("#update_name")){
-                        
-                        let updateForm = document.createElement('form')
-                        updateForm.innerHTML =`
-                        <label for="name" ></label>
-                        <input type="text" id="name" name="name" placeholder="Enter new name"><br><br>
-                        <input type="submit" value="Submit">
-                        `
-                        bodyHTML.appendChild(updateForm)
+                    let updateForm = document.createElement('form')
+                    updateForm.innerHTML =`
+                    <label for="name" ></label>
+                    <input type="text" id="name" name="name" placeholder="Enter new name"><br><br>
+                    <input type="submit" value="Submit">
+                    `
+                    bodyHTML.appendChild(updateForm)
 
-                        updateForm.addEventListener("submit", e=>{
+                    updateForm.addEventListener("submit", e=>{
 
-                            e.preventDefault()
-
-                            let newName = e.target.name.value
-
-                            const options = {
-                                method: 'PATCH',
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'application/json',
-                                    },
-                                body: JSON.stringify({name: newName})
-                            }  
-
-                            fetch(`${studentUrl}/${signedUser.id}`, options)
-                            .then(resp => resp.json())
-                            .then (data => {
-                                signedUser.name = data.name
-                                document.querySelector(`[data-id="${signedUser.id}"]`).textContent = data.name
-                                updateForm.remove()
-                            })
-                        })
-
-                    } else if (e.target.matches("#update_email")){
-                    
-                        let updateForm = document.createElement('form')
-                        updateForm.innerHTML =`
-                        <label for="email" ></label>
-                        <input type="text" id="email" name="email" placeholder="Enter new email"><br><br>
-                        <input type="submit" value="Submit">
-                        `
-                        bodyHTML.appendChild(updateForm)
-
-                        updateForm.addEventListener("submit", e=>{
-                            e.preventDefault()
-
-                            let newEmail = e.target.email.value
-
-                            const options = {
-                                method: 'PATCH',
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'application/json',
-                                    },
-                                body: JSON.stringify({email: newEmail})
-                                }  
-
-                            fetch(`${studentUrl}/${signedUser.id}`, options)
-                            .then(resp => resp.json())
-                            .then (data => {
-                                signedUser.name = data.email
-                                updateForm.remove()
-                            })
-                        })
-
-                    }else if (e.target.matches("#delete_user")) {
                         e.preventDefault()
 
-                        const options = {method: 'DELETE'}
-                        fetch(`${studentUrl}/${signedUser.id}`, options)
-                        .then(data =>{
-                        let activeUser = document.querySelector(`[data-id="${signedUser.id}"]`)
-                        activeUser.remove()// troubleshoot with real data
-                        })
-                        updateForm.remove()
-                    }
+                        let newName = e.target.name.value
 
-                })// userInfo eventL          
-            }) // welcomeForm eventL
-        } // welcomeUser fn
+                        const options = {
+                            method: 'PATCH',
+                            headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                },
+                            body: JSON.stringify({name: newName})
+                        }  
+
+                        fetch(`${studentUrl}/${signedUser.id}`, options)
+                        .then(resp => resp.json())
+                        .then (data => {
+                            signedUser.name = data.name
+                            document.querySelector(`[data-id="${signedUser.id}"]`).textContent = data.name
+                            updateForm.remove()
+                        })
+                    })
+
+                } else if (e.target.matches("#update_email")){
                 
-                welcomeUser()
+                    let updateForm = document.createElement('form')
+                    updateForm.innerHTML =`
+                    <label for="email" ></label>
+                    <input type="text" id="email" name="email" placeholder="Enter new email"><br><br>
+                    <input type="submit" value="Submit">
+                    `
+                    bodyHTML.appendChild(updateForm)
+
+                    updateForm.addEventListener("submit", e=>{
+                        e.preventDefault()
+
+                        let newEmail = e.target.email.value
+
+                        const options = {
+                            method: 'PATCH',
+                            headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                },
+                            body: JSON.stringify({email: newEmail})
+                            }  
+
+                        fetch(`${studentUrl}/${signedUser.id}`, options)
+                        .then(resp => resp.json())
+                        .then (data => {
+                            signedUser.name = data.email
+                            updateForm.remove()
+                        })
+                    })
+
+                } else if (e.target.matches("#delete_user")) {
+                    e.preventDefault()
+
+                    const options = {method: 'DELETE'}
+                    fetch(`${studentUrl}/${signedUser.id}`, options)
+                    .then(data =>{
+                    let activeUser = document.querySelector(`[data-id="${signedUser.id}"]`)
+                    activeUser.remove()// troubleshoot with real data
+                    })
+                    updateForm.remove()
+                }
+            })// userInfo eventL          
+        }) // welcomeForm eventL
+    } // welcomeUser fn
+                
+        // welcomeUser()
             
     //TODO- testing on Thursday with smaller seed-sample to be mindful of API call limits
     async function createMeetings() {
