@@ -3,9 +3,10 @@
 <head>
     <title>Zoom WebSDK</title>
     <meta charset="utf-8" />
-    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.7.10/css/bootstrap.css" />
+    <!-- <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.7.10/css/bootstrap.css" /> -->
     <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.7.10/css/react-select.css" />
-    
+    <link type="text/css" rel="stylesheet" href="styles.css"/>
+
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -54,73 +55,75 @@
             margin: 0;
         }
     </style>
-    <nav id="nav-tool" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Classroom Demo with Zoom WebSDK</a>
+    <div class="zoomsdk-navbar">
+        <nav id="nav-tool" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Classroom Demo with Zoom WebSDK</a>
+                </div>
+                <div id="navbar" class="websdktest">
+                    <form class="navbar-form navbar-right" id="meeting_form">
+                        <div class="form-group">
+                            <input type="text" name="display_name" id="display_name" value="1.7.10#CDN" maxLength="100"
+                                placeholder="Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="meeting_number" id="meeting_number" value="" maxLength="200"
+                                style="width:150px" placeholder="Meeting Number" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="meeting_pwd" id="meeting_pwd" value="" style="width:150px"
+                                maxLength="32" placeholder="Meeting Password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="meeting_email" id="meeting_email" value="" style="width:150px"
+                                maxLength="32" placeholder="Email option" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <select id="meeting_role" class="sdk-select">
+                                <option value=0>Attendee</option>
+                                <option value=1>Host</option>
+                                <option value=5>Assistant</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="meeting_china" class="sdk-select">
+                                <option value=0>Global</option>
+                                <option value=1>China</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="meeting_lang" class="sdk-select">
+                                <option value="en-US">English</option>
+                                <option value="de-DE">German Deutsch</option>
+                                <option value="es-ES">Spanish Español</option>
+                                <option value="fr-FR">French Français</option>
+                                <option value="jp-JP">Japanese 日本語</option>
+                                <option value="pt-PT">Portuguese Portuguese</option>
+                                <option value="ru-RU">Russian Русский</option>
+                                <option value="zh-CN">Chinese 简体中文</option>
+                                <option value="zh-TW">Chinese 繁体中文</option>
+                                <option value="ko-KO">Korean 한국어</option>
+                                <option value="vi-VN">Vietnamese Tiếng Việt</option>
+                                <option value="it-IT">Italian italiano</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" value="" id="copy_link_value" />
+                        <button type="submit" class="btn btn-primary" id="join_meeting">Join</button>
+                        <button type="submit" class="btn btn-primary" id="join_iframe">Join iFrame</button>
+                        <button type="submit" class="btn btn-primary" id="clear_all">Clear</button>
+                        <button type="button" link="" onclick="window.copyJoinLink('#copy_join_link')"
+                            class="btn btn-primary" id="copy_join_link">Copy Direct join link</button>
+
+
+                    </form>
+                </div>
+                <!--/.navbar-collapse -->
             </div>
-            <div id="navbar" class="websdktest">
-                <form class="navbar-form navbar-right" id="meeting_form">
-                    <div class="form-group">
-                        <input type="text" name="display_name" id="display_name" value="1.7.10#CDN" maxLength="100"
-                            placeholder="Name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="meeting_number" id="meeting_number" value="" maxLength="200"
-                            style="width:150px" placeholder="Meeting Number" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="meeting_pwd" id="meeting_pwd" value="" style="width:150px"
-                            maxLength="32" placeholder="Meeting Password" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="meeting_email" id="meeting_email" value="" style="width:150px"
-                            maxLength="32" placeholder="Email option" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <select id="meeting_role" class="sdk-select">
-                            <option value=0>Attendee</option>
-                            <option value=1>Host</option>
-                            <option value=5>Assistant</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="meeting_china" class="sdk-select">
-                            <option value=0>Global</option>
-                            <option value=1>China</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select id="meeting_lang" class="sdk-select">
-                            <option value="en-US">English</option>
-                            <option value="de-DE">German Deutsch</option>
-                            <option value="es-ES">Spanish Español</option>
-                            <option value="fr-FR">French Français</option>
-                            <option value="jp-JP">Japanese 日本語</option>
-                            <option value="pt-PT">Portuguese Portuguese</option>
-                            <option value="ru-RU">Russian Русский</option>
-                            <option value="zh-CN">Chinese 简体中文</option>
-                            <option value="zh-TW">Chinese 繁体中文</option>
-                            <option value="ko-KO">Korean 한국어</option>
-                            <option value="vi-VN">Vietnamese Tiếng Việt</option>
-                            <option value="it-IT">Italian italiano</option>
-                        </select>
-                    </div>
-
-                    <input type="hidden" value="" id="copy_link_value" />
-                    <button type="submit" class="btn btn-primary" id="join_meeting">Join</button>
-                    <button type="submit" class="btn btn-primary" id="join_iframe">Join iFrame</button>
-                    <button type="submit" class="btn btn-primary" id="clear_all">Clear</button>
-                    <button type="button" link="" onclick="window.copyJoinLink('#copy_join_link')"
-                        class="btn btn-primary" id="copy_join_link">Copy Direct join link</button>
-
-
-                </form>
-            </div>
-            <!--/.navbar-collapse -->
-        </div>
-    </nav>
+        </nav>
+    </div>
 
     <div id="show-test-tool">
         <button type="submit" class="btn btn-primary" id="show-test-tool-btn"
@@ -150,27 +153,26 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
     
     <script src="js/vconsole.min.js"></script>
     <script src="js/tool.js"></script>
     <script src="js/index.js"></script>
-
-    <script>
-    </script>
+    <script src="./src/classroom.js"></script>
 
 <br><br><br><br>
 <br>
 <br>
-
-<h4 id="welcome">Hello</h4>
+<div class="welcome-page">
+    <h4 id="welcome">Hello</h4>
+</div>
 <br><br><br><br>
 <br>
 <br>
+<!-- <img class="lDu2cg" crossorigin="anonymous" src="https://media-private.canva.com/pJ-NU/MAEFcQpJ-NU/1/s.png?response-expires=Thu%2C%2020%20Aug%202020%2021%3A00%3A09%20GMT&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20200820T183007Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=9001&amp;X-Amz-Credential=AKIAJJATJK7JCUD446NA%2F20200820%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=719622a7b79675228c7a545b0f62c9a0d5d4945a29a98434a4649572b4b9aa55" draggable="false" style="height: auto"> -->
 <!-- <div style="width:200px;height:50px;border:1px solid #000;">This is a rectangle!</div> -->
 
 <ul id="students"></ul>
-<script src="./src/classroom.js"></script>
 </body>
 
 </html>
