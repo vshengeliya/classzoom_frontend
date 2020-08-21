@@ -21,14 +21,8 @@ document.addEventListener("DOMContentLoaded", e => {
 
     const welcomePage = document.querySelector(".welcome-page")
     welcomePage.innerHTML =`
-<<<<<<< HEAD
-    <img src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png">
-    `
-
-=======
         <img class="image-welcome-bg" src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png">
         `
->>>>>>> bbbd4c72bb5418db4677bf29007969d9138617c1
 
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
@@ -73,22 +67,12 @@ document.addEventListener("DOMContentLoaded", e => {
              name="submit"
              value="Enter the Classroom"
              class="submit"/>
-<<<<<<< HEAD
-         </form>
-        </div>
-         `
-
-         
-        welcomeForm.addEventListener("submit", e=>{
-            e.preventDefault()
-=======
              </form>
              `
              welcomeForm.appendChild(loginForm);
 
              welcomeForm.addEventListener("submit", e=>{
                  e.preventDefault()
->>>>>>> bbbd4c72bb5418db4677bf29007969d9138617c1
             // TODO - change to email and password for auth flow
             let name = e.target.name.value
             let email = e.target.email.value
