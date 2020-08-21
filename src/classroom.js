@@ -307,9 +307,10 @@ document.addEventListener("DOMContentLoaded", e => {
         // div.dataset.id = studentObj.id
         // div.innerText= studentObj.name
         // studentUl.appendChild(div)
-        if (signedInUser.id){
+        if (signedInUser.user.id == div.dataset.id){
 
-debugger
+
+// debugger
             div.style.color = 'green'
         }
     }
