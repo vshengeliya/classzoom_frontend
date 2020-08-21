@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", e => {
             // navBar.hidden = false
 
             function renderAccountControl(){
+                const userWrapper  = document.querySelector(".wrapper-classroom-currentuser")
                 let userDropdown = document.createElement('div')
             userDropdown.classList.add("user-profile-menu")
             userDropdown.innerHTML= `
@@ -111,6 +112,8 @@ document.addEventListener("DOMContentLoaded", e => {
                         <a href="#">Delete My Account</a>
                     </div>
                 </div>`
+
+                userWrapper.appendChild(userDropdown)
             }//f accountControl
 
             /* userDropdown.innerHTML=`
@@ -232,9 +235,10 @@ document.addEventListener("DOMContentLoaded", e => {
             fetchStudents()
             fetchTeacher()
             fetchEvents()
+            debugger
             clickHandler()
             renderAccountControl()
-            accountControl()
+            // accountControl()
             }
         }) // welcomePage eventL
 // debugger
