@@ -3,6 +3,7 @@
 document.addEventListener("DOMContentLoaded", e => {
 
     document.styleSheets[53].disabled = true;
+
     let signedUser;
     
     const studentUrl = "http://localhost:3000/students"
@@ -10,7 +11,9 @@ document.addEventListener("DOMContentLoaded", e => {
     const classroomUrl = "http://localhost:3000/classrooms/13"
     const teacherUrl = "http://localhost:3000/teachers"
     
-    const studentUl = document.getElementById("students")
+    // const studentUl = document.getElementById("students")
+    // replace to wrapper-classroom + column-desk
+    const studentWrapper = document.querySelector(".wrapper-classroom");
     const navBar = document.querySelector("#nav-tool")
     const bodyHTML = document.getElementsByTagName('body')[0]
     
@@ -18,9 +21,14 @@ document.addEventListener("DOMContentLoaded", e => {
 
     const welcomePage = document.querySelector(".welcome-page")
     welcomePage.innerHTML =`
+<<<<<<< HEAD
     <img src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png">
     `
 
+=======
+        <img class="image-welcome-bg" src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png">
+        `
+>>>>>>> bbbd4c72bb5418db4677bf29007969d9138617c1
 
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
@@ -42,32 +50,30 @@ document.addEventListener("DOMContentLoaded", e => {
 
     
     function welcomeUser(){
-        let welcomeForm = document.querySelector("#welcome")
-    
-         welcomeForm.innerHTML =`
-         <div class="container-form">
-         <form class="student-signin-form">
-           <h3>Welcome to Flatiron School!</h3>
-    
-           <input
+        let welcomeForm = document.querySelector(".welcome-page")
+        const loginForm = document.createElement("form")
+        loginForm.classList.add("welcome-signin-form")
+        loginForm.innerHTML =`    
+         <input
              type="text"
              name="name"
              value=""
              placeholder="Enter your name"
              class="input-text"/>
-           <br/>
-           <input
+             <br/>
+             <input
              type="text"
              name="email"
              value=""
              placeholder="Enter your email"
              class="input-text"/>
-           <br/><br/>
-           <input
+             <br/><br/>
+             <input
              type="submit"
              name="submit"
              value="Enter the Classroom"
              class="submit"/>
+<<<<<<< HEAD
          </form>
         </div>
          `
@@ -75,6 +81,14 @@ document.addEventListener("DOMContentLoaded", e => {
          
         welcomeForm.addEventListener("submit", e=>{
             e.preventDefault()
+=======
+             </form>
+             `
+             welcomeForm.appendChild(loginForm);
+
+             welcomeForm.addEventListener("submit", e=>{
+                 e.preventDefault()
+>>>>>>> bbbd4c72bb5418db4677bf29007969d9138617c1
             // TODO - change to email and password for auth flow
             let name = e.target.name.value
             let email = e.target.email.value
@@ -240,18 +254,43 @@ document.addEventListener("DOMContentLoaded", e => {
         let response = await fetch(studentUrl)
         let data = await response.json()
         
+
+
+        
+        let count = 0;
+        let studentNode;
+
         data.forEach(student =>{
-            if(student.name === name){
-                currentUser(student)
+    
+            if (count % 5 === 0) {
+
+                studentNode = document.createElement('div');
+                studentNode.classList.add("column-desk");
+                let divRow = document.createElement('div');
+                divRow.classList.add('row');
+                divRow.dataset.id = `${student.id}`
+                divRow.innerHTML = `<span class="student-name"> <img class="desk" src="https://i.dlpng.com/static/png/6363196_thumb.png">${student.name}</span>`
+                studentNode.appendChild(divRow)
+                studentWrapper.appendChild(studentNode)
             } else {
-                let div = document.createElement('div')
-                div.dataset.id = `${student.id}`
-                div.classList.add("student-desk")
-                div.innerText = `${student.name}` 
-                studentUl.appendChild(div)
+                let column = document.querySelectorAll(".column-desk")[document.querySelectorAll(".column-desk").length - 1]
+                studentNode = document.createElement('div');
+                studentNode.classList.add("row");
+                studentNode.dataset.id = `${student.id}`
+                studentNode.innerHTML = `<span class="student-name"> <img class="desk" src="https://i.dlpng.com/static/png/6363196_thumb.png">${student.name}</span>`
+                column.appendChild(studentNode)
             }
-        }) 
+            count++
+            
+            // this code changed logged-in user's textContent color to green to represent logged-in status
+            // if(student.name === name){
+            //     currentUser(student)
+          
+       
+        })        
     }
+
+    // this code changed logged-in user's textContent color to green to represent logged-in status
     function currentUser(studentObj){
         signedUser = studentObj
         let div = document.createElement('div')
@@ -262,45 +301,24 @@ document.addEventListener("DOMContentLoaded", e => {
         div.style.color = 'green'
     }
      
-    studentUl.addEventListener("click", e=>{
+    studentWrapper.addEventListener("click", e=>{
         const meetingForm = document.getElementById("meeting_form")
         
-        let id = parseInt(e.target.dataset.id)
+        let id = parseInt(e.target.closest(".row").dataset.id)
+      
         
         async function fetchOneStudent (){
-            let response = await fetch(studentUrl)
-            let data = await response.json()
-            let host_student =  data.filter(student =>( student.id === id))
-            console.log(host_student[0])
-
-            let hostZoomName = host_student[0].name
-            let hostMeetingId = host_student[0].zoom_meeting_id
-            let hostMeetingPassword = host_student[0].zoom_meeting_password
+            let response = await fetch(studentUrl + "/" + id)
+            let host_student = await response.json()
+            
+            let hostZoomName = host_student.name
+            let hostMeetingId = host_student.zoom_meeting_id
+            let hostMeetingPassword = host_student.zoom_meeting_password
             
             meetingForm.display_name.value = hostZoomName
             meetingForm.meeting_number.value = hostMeetingId
             meetingForm.meeting_pwd.value = hostMeetingPassword
-              
-        // meetingForm.addEventListener("submit", e=>{
-        //     e.preventDefault()
-
-            // NO WINDOW POP UP!!!
-
-            // <div id=zmmtg-root>
-            // <span class="footer__leave-btn-text">Leave Meeting</span>
-            //on click hide div id=zmm, change the boolean 
-
-            // on click join iFrame - window pops up,
-            //student.status = flase
-            //PATCH request to student
-            
-            //on click on "red button(cancel call in iFrame)"
-            //student.status = active
-            //no patch request - action happens in back end
-            //GET reqest to RAILS
-            
-           // console.log("click form")          
-        // })//form  
+             
         }//fetchOne Student
         fetchOneStudent()
     })//eventListener
@@ -315,11 +333,11 @@ document.addEventListener("DOMContentLoaded", e => {
            let eventDiv = document.createElement('div')
            eventDiv.innerHTML= `
            
-           <h3 style="color:Salmon;">${event.name}<h3/>
-            <h4>${event.date}<h4/>
-            <h5>${event.time}<h5/>
-            <p>${event.description}<p/>
-            <p style="color:CornflowerBlue;">${event.zoom_url}<p/>`
+           <h3 style="color:Salmon;">${event.name}</h3>
+            <h4>${event.date}</h4>
+            <h5>${event.time}</h5>
+            <p>${event.description}</p>
+            <p style="color:CornflowerBlue;">${event.zoom_url}</p>`
             
             bodyHTML.appendChild(eventDiv)
         })) 
@@ -332,9 +350,9 @@ document.addEventListener("DOMContentLoaded", e => {
             let teacherUl = document.createElement('ul')
             let teacherDiv = document.createElement('div')
             teacherUl.appendChild(teacherDiv)
-            studentUl.insertAdjacentElement('beforebegin', teacherUl)
+            studentWrapper.insertAdjacentElement('beforebegin', teacherUl)
             teacherDiv.innerText = `Class teacher: ${teacher.name}`
             teacherDiv.style.color = 'BlueViolet'
-        }) 
+        })
     )}
-})//Content Loaded
+}) // Content Loaded

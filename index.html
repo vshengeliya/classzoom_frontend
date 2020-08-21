@@ -20,7 +20,6 @@
         }
 
         .websdktest button {
-            float: right;
             margin-left: 5px;
         }
 
@@ -45,7 +44,7 @@
             width: 700px;
             height: 500px;
             border: 1px;
-            border-color: red;
+            border-color: white;
             border-style: dashed;
             position: fixed;
             top: 50%;
@@ -55,7 +54,8 @@
             margin: 0;
         }
     </style>
-    <div class="zoomsdk-navbar">
+
+    <div class="wrapper-zoomsdk-navbar">
         <nav id="nav-tool" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -109,15 +109,13 @@
                                 <option value="it-IT">Italian italiano</option>
                             </select>
                         </div>
-
-                        <input type="hidden" value="" id="copy_link_value" />
-                        <button type="submit" class="btn btn-primary" id="join_meeting">Join</button>
-                        <button type="submit" class="btn btn-primary" id="join_iframe">Join iFrame</button>
-                        <button type="submit" class="btn btn-primary" id="clear_all">Clear</button>
-                        <button type="button" link="" onclick="window.copyJoinLink('#copy_join_link')"
-                            class="btn btn-primary" id="copy_join_link">Copy Direct join link</button>
-
-
+                        <div class="form-group">
+                            <input type="hidden" value="" id="copy_link_value" />
+                            <button type="submit" class="btn-primary" id="join_meeting">Join</button>
+                            <button type="submit" class="btn-primary" id="join_iframe">Join iFrame</button>
+                            <button type="submit" class="btn-primary" id="clear_all">Clear</button>
+                            <button type="button" link="" onclick="window.copyJoinLink('#copy_join_link')" class="btn-primary" id="copy_join_link">Copy Direct join link</button>
+                        </div>
                     </form>
                 </div>
                 <!--/.navbar-collapse -->
@@ -126,7 +124,7 @@
     </div>
 
     <div id="show-test-tool">
-        <button type="submit" class="btn btn-primary" id="show-test-tool-btn"
+        <button type="submit" class="btn-primary" id="show-test-tool-btn"
             title="show or hide top test tool">Show</button>
     </div>
     <script>
@@ -160,20 +158,34 @@
     <script src="js/index.js"></script>
     <script src="./src/classroom.js"></script>
 
-<br><br><br><br>
-<br>
-<br>
-<div class="welcome-page" ></div>
 
-<div id="welcome">Hello</div>
+    <div class="wrapper-welcome"> 
+        <div class="welcome-page">
+        </div>
+    </div>
 
-<br><br><br><br>
-<br>
-<br>
-<!-- <img class="lDu2cg" crossorigin="anonymous" src="https://media-private.canva.com/pJ-NU/MAEFcQpJ-NU/1/s.png?response-expires=Thu%2C%2020%20Aug%202020%2021%3A00%3A09%20GMT&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20200820T183007Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=9001&amp;X-Amz-Credential=AKIAJJATJK7JCUD446NA%2F20200820%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=719622a7b79675228c7a545b0f62c9a0d5d4945a29a98434a4649572b4b9aa55" draggable="false" style="height: auto"> -->
-<!-- <div style="width:200px;height:50px;border:1px solid #000;">This is a rectangle!</div> -->
 
-<ul id="students"></ul>
+    <ul id="students"></ul>
+
+    <div class="wrapper-classroom">
+
+    </div>
+
+    <div class="wrapper-classroom-events">
+        <div class="column-event">
+            <div class="row"> 
+                <span class="event"> 
+                        <h3 style="color:Salmon;">${event.name}</h3>
+                        <h4>${event.date}<h4/>
+                        <h5>${event.time}<h5/>
+                        <h5>${event.description}</h5>
+                        <p style="color:CornflowerBlue;">${event.zoom_url}</p>
+                </span>  
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>
