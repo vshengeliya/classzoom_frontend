@@ -1,17 +1,18 @@
 * {
     margin: 0;
     box-sizing: border-box;
-    background-color: white;
+    /* background-color: white; */
+    /* background-color: rgba(0, 0, 0, 0.01) */
     /* background-image: url("https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png") */
 }
 
 body {
-  color: #fff;
-  font-family: sans-serif;
+  color: rgb(44, 85, 109);
+  /* font-family: sans-serif;
   font-size: 1.25rem;
   line-height: 150%;
-  text-align: center;
-  text-shadow: 0 2px 2px #b6701e;
+  text-align: center; */
+  /* text-shadow: 0 2px 2px #b6701e; */
 }
 div {
   display: flex;
@@ -25,7 +26,7 @@ body {
 
 }
 .wrapper-classroom {
-  background-color: #ff9e2c;
+  background-color: #f5f6f7;
   flex: 1;
   padding: 1rem;
   justify-content: left;
@@ -37,8 +38,17 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   flex: 1;
+  background-color: rgba(0, 0, 0, 0.01);
 
 }
+.column-event{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50%; 
+  flex: 1;
+  height: 100%;
+}
+
 
 .column-desk{
   display: flex;
@@ -50,10 +60,10 @@ body {
 
 
 .wrapper-classroom-events {
-  background-color: #b6701e;
+  background-color: #d8f5eb;
   flex: 1;
   padding: 1rem;
-  justify-content: right;
+  justify-content: left;
 }
 .wrapper-zoomsdk-navbar {
 }
@@ -76,13 +86,15 @@ body {
 
 
 .btn-primary{
-  border-color: #2d6ca2;
-  background-image: -webkit-gradient(linear, to bottom, to top, color-stop(0%, #428bca), color-stop(100%, #3071a9));
-  background-image: -webkit-linear-gradient(to bottom, #428bca 0%, #3071a9 100%);
-  background-image: -moz-linear-gradient(to bottom, #428bca 0%, #3071a9 100%);
-  background-image: -o-linear-gradient(to bottom, #428bca 0%, #3071a9 100%);
-  background-image: linear-gradient(to bottom, #428bca 0%, #3071a9 100%);
+  border-color: rgb(44, 85, 109);
+  background-image: -webkit-gradient(linear, to bottom, to top, color-stop(0%,  rgb(44, 85, 109) rgb(44, 85, 109)), color-stop(100%, #3071a9));
+  background-image: -webkit-linear-gradient(to bottom,  rgb(44, 85, 109) 0%,  rgb(44, 85, 109) 100%);
+  background-image: -moz-linear-gradient(to bottom,  rgb(44, 85, 109) 0%,  rgb(44, 85, 109) 100%);
+  background-image: -o-linear-gradient(to bottom,  rgb(44, 85, 109) 0%,  rgb(44, 85, 109) 100%);
+  background-image: linear-gradient(to bottom,  rgb(44, 85, 109) 0%,  rgb(44, 85, 109) 100%);
   *zoom: 1;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  color:white;
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF428BCA', endColorstr='#FF3071A9');
 }
 
@@ -121,14 +133,14 @@ body {
 }
 
 .btn-secondary{
-    background-color: #4CAF50; /* Green */
+    background-color: rgb(44, 85, 109); /* Green */
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 10px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 10px;
 }
 
 .welcome-page{
@@ -215,6 +227,7 @@ body {
   border: 1px solid #000;
   width : 50px;
   height : 50px;
+  background-color: rgba(0, 0, 0, 0.01)
 }
 
 
@@ -228,16 +241,17 @@ body {
     width:100px;
     height:50px;
     border:1px;
+    background-color: rgba(0, 0, 0, 0.01)
 }
 
 /*
 dropdown toggle styles below
 */
 .dropbtn {
-    background-color: #3498DB;
+    background-color: rgb(44, 85, 109);
     color: white;
-    padding: 16px;
-    font-size: 16px;
+    padding: 10px;
+    font-size: 12px;
     border: none;
     cursor: pointer;
   }

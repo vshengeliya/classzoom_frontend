@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", e => {
     
     const studentUrl = "http://localhost:3000/students"
     const meetingsUrl = "http://localhost:3000/meetings"
-    const classroomUrl = "http://localhost:3000/classrooms/13"
+    const classroomUrl = "http://localhost:3000/classrooms/4"
     const teacherUrl = "http://localhost:3000/teachers"
     
     // const studentUl = document.getElementById("students")
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", e => {
     const navBar = document.querySelector("#nav-tool")
     const bodyHTML = document.getElementsByTagName('body')[0]
     
-    navBar.hidden = true
+    navBar.style.display = 'none'
 
     const welcomePage = document.querySelector(".welcome-page")
     welcomePage.innerHTML =`
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", e => {
             meetingForm.display_name.value = hostZoomName
             meetingForm.meeting_number.value = hostMeetingId
             meetingForm.meeting_pwd.value = hostMeetingPassword
-             
+            navBar.style.display = 'block'
         }//fetchOne Student
         fetchOneStudent()
     })//eventListener
@@ -314,16 +314,21 @@ document.addEventListener("DOMContentLoaded", e => {
 
         .then(data => data.events.forEach(event=>{
 
-           let eventDiv = document.createElement('div')
-           eventDiv.innerHTML= `
-           
-           <h3 style="color:Salmon;">${event.name}</h3>
-            <h4>${event.date}</h4>
-            <h5>${event.time}</h5>
-            <p>${event.description}</p>
-            <p style="color:CornflowerBlue;">${event.zoom_url}</p>`
-            
-            bodyHTML.appendChild(eventDiv)
+            let eventDiv = document.querySelector(".wrapper-classroom-events")
+            let divColumnEvent = document.createElement('div')
+            divColumnEvent.className='column-event'
+            divColumnEvent.innerHTML=`
+            <div class="row"> 
+                <span class="event"> 
+                        <h3 style="color:Salmon;">${event.name}</h3>
+                        <h4>${event.date}<h4/>
+                        <h5>${event.time}<h5/>
+                        <h5>${event.description}</h5>
+                        <p style="color:CornflowerBlue;">${event.zoom_url}</p>
+                </span>  
+            </div>`
+
+            eventDiv.appendChild(divColumnEvent)
         })) 
     }//Fetch Events
     
