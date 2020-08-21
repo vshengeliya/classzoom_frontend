@@ -228,6 +228,7 @@ document.addEventListener("DOMContentLoaded", e => {
             // debugger
             if (signedInUser.logged_in){
                 
+                createMeetings()
                 fetchStudents()
                 fetchTeacher()
                 fetchEvents()
