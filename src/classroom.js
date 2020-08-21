@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", e => {
     
     const studentUrl = "http://localhost:3000/students"
     const meetingsUrl = "http://localhost:3000/meetings"
-    const classroomUrl = "http://localhost:3000/classrooms/5"
+    const classroomUrl = "http://localhost:3000/classrooms/13"
     const teacherUrl = "http://localhost:3000/teachers"
     
     const studentWrapper = document.querySelector(".wrapper-classroom");
@@ -169,11 +169,13 @@ document.addEventListener("DOMContentLoaded", e => {
                                 body: JSON.stringify({name: newName})
                             }  
 
-                            fetch(`${studentUrl}/${signedUser.id}`, options)
+                            fetch(`${studentUrl}/${signedInUser.user.id}`, options)
                             .then(resp => resp.json())
                             .then (data => {
-                                signedUser.name = data.name
-                                document.querySelector(`[data-id="${signedUser.id}"]`).textContent = data.name
+                                signedInUser.user.name = data.name
+                                document.querySelector(`[data-id="${signedInUser.user.id}"]`).innerHTML = `
+                                    <div class="row" data-id="${signedInUser.user.id}"><span class="student-name"> <img class="desk" src="https://i.dlpng.com/static/png/6363196_thumb.png">${data.name}</span></div>
+                                    `
                                 updateForm.remove()
                             })
                         })
@@ -202,10 +204,10 @@ document.addEventListener("DOMContentLoaded", e => {
                                 body: JSON.stringify({email: newEmail})
                                 }  
 
-                            fetch(`${studentUrl}/${signedUser.id}`, options)
+                            fetch(`${studentUrl}/${signedInUser.user.id}`, options)
                             .then(resp => resp.json())
                             .then (data => {
-                                signedUser.name = data.email
+                                localStorage.setItem('loggedIn', JSON.stringify(data))
                                 updateForm.remove()
                             })
                         })
@@ -214,9 +216,9 @@ document.addEventListener("DOMContentLoaded", e => {
                         e.preventDefault()
 
                         const options = {method: 'DELETE'}
-                        fetch(`${studentUrl}/${signedUser.id}`, options)
+                        fetch(`${studentUrl}/${signedInUser.user.id}`, options)
                         .then(data =>{
-                            let activeUser = document.querySelector(`[data-id="${signedUser.id}"]`)
+                            let activeUser = document.querySelector(`[data-id="${signedInUser.user.id}"]`)
                             activeUser.remove()// troubleshoot with real data
                         })
                         updateForm.remove()
@@ -224,21 +226,16 @@ document.addEventListener("DOMContentLoaded", e => {
                 })// userInfo eventL
             }
             // debugger
-            if (signedInUser.status === 401 || signedInUser.user.id === undefined){
+            if (signedInUser.logged_in){
                 
-                welcomeUser()
-
-                         
+                fetchStudents()
+                fetchTeacher()
+                fetchEvents()
+                clickHandler()
+                renderAccountControl()
+            
             } else{
-                // debugger
- 
-            fetchStudents()
-            fetchTeacher()
-            fetchEvents()
-            debugger
-            clickHandler()
-            renderAccountControl()
-            // accountControl()
+                welcomeUser()
             }
         }) // welcomePage eventL
 // debugger
@@ -256,7 +253,7 @@ document.addEventListener("DOMContentLoaded", e => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
-            body: JSON.stringify({student: {id: signedUser.id}})
+            body: JSON.stringify({student: {id: signedInUser.user.id}})
             }  
         fetch(meetingsUrl, options)
     }
