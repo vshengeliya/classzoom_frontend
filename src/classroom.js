@@ -338,7 +338,6 @@ debugger
    function fetchEvents(){
         fetch(classroomUrl)
         .then(resp =>resp.json())
-        // .then(data=>console.log(data.events))
 
         .then(data => data.events.forEach(event=>{
 
