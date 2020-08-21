@@ -225,10 +225,11 @@ document.addEventListener("DOMContentLoaded", e => {
                     }
                 })// userInfo eventL
             }
-            // debugger
+            debugger
             if (signedInUser.logged_in){
-                
-                createMeetings()
+
+                //* uncomment to enable zoom meeting creation for user upon login via ZoomAPI
+                // createMeetings()
                 fetchStudents()
                 fetchTeacher()
                 fetchEvents()
