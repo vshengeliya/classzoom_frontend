@@ -4,62 +4,68 @@ document.addEventListener("DOMContentLoaded", e => {
 
     document.styleSheets[53].disabled = true;
 
-    let signedUser;
+    let signedInUser = JSON.parse(localStorage.getItem('loggedIn'))
     
     const studentUrl = "http://localhost:3000/students"
     const meetingsUrl = "http://localhost:3000/meetings"
-    const classroomUrl = "http://localhost:3000/classrooms/4"
+    const classroomUrl = "http://localhost:3000/classrooms/5"
     const teacherUrl = "http://localhost:3000/teachers"
     
-    // const studentUl = document.getElementById("students")
-    // replace to wrapper-classroom + column-desk
     const studentWrapper = document.querySelector(".wrapper-classroom");
     const navBar = document.querySelector("#nav-tool")
     const bodyHTML = document.getElementsByTagName('body')[0]
     
     navBar.style.display = 'none'
 
-    const welcomePage = document.querySelector(".welcome-page")
-    welcomePage.innerHTML =`
-        <img class="image-welcome-bg" src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png">
-        `
+ 
 
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
       }
       
       // Close the dropdown if the user clicks outside of it
-      window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-          var dropdowns = document.getElementsByClassName("dropdown-content");
-          var i;
-          for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-              openDropdown.classList.remove('show');
+      function accountControl() {
+        document.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                  var openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                  }
+                }
             }
-          }
         }
-      }
+    }//f accountContol
 
     
     function welcomeUser(){
-        let welcomeForm = document.querySelector(".welcome-page")
+         
+        const welcomePage = document.querySelector(".wrapper-welcome")
+        const welcomeImage = document.createElement('img')
+        welcomeImage.src ="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fumbrellatech.co%2Fwp-content%2Fuploads%2F2019%2F06%2FClassroom-Door-Lockdown-Device.png"
+        welcomeImage.className="image-welcome-bg"
+        welcomePage.appendChild(welcomeImage)
+        
+        // let welcomePage = document.createElement('div')
+        // welcomePage.className = "welcome-page"
+
         const loginForm = document.createElement("form")
         loginForm.classList.add("welcome-signin-form")
         loginForm.innerHTML =`    
          <input
              type="text"
-             name="name"
+             name="email"
              value=""
-             placeholder="Enter your name"
+             placeholder="Enter your email"
              class="input-text"/>
              <br/>
              <input
              type="text"
-             name="email"
+             name="password"
              value=""
-             placeholder="Enter your email"
+             placeholder="Enter your password"
              class="input-text"/>
              <br/><br/>
              <input
@@ -69,31 +75,32 @@ document.addEventListener("DOMContentLoaded", e => {
              class="submit"/>
              </form>
              `
-             welcomeForm.appendChild(loginForm);
+             welcomePage.appendChild(loginForm);
 
-             welcomeForm.addEventListener("submit", e=>{
+             welcomePage.addEventListener("submit", e=>{
                  e.preventDefault()
             // TODO - change to email and password for auth flow
-            let name = e.target.name.value
             let email = e.target.email.value
+            let password = e.target.password.value
            
             // TODO - incorporate post request to sessions controller for user Auth and localStorage of cookies
-            // instance = axios.create({
-            //     baseURL: 'http://localhost:3000',
-            //    });
-            //    instance
-            //     .post("/sessions", { email: "kb@kb.com", password: "password" })
-            //     .then(response => {
-            //         localStorage.setItem("loggedIn", JSON.stringify(response.data));
-            //     })
-            //* to extract localStorage stuff -> JSON.parse(localStorage.getItem('loggedIn'))
+            instance = axios.create({
+                baseURL: 'http://localhost:3000',
+               });
+               instance
+                .post("/sessions", { email: email, password: password })
+                .then(response => {
+                    localStorage.setItem("loggedIn", JSON.stringify(response.data));
+                })
+            //* to extract localStorage stuff -> let signedInUser = JSON.parse(localStorage.getItem('loggedIn'))
             
-            fetchStudents(name)
-            fetchTeacher()
-            welcomeForm.remove()
-            navBar.hidden = false
+            // fetchStudents(name)
+            // fetchTeacher()
+            welcomePage.innerHTML=''
+            // navBar.hidden = false
 
-            let userDropdown = document.createElement('div')
+            function renderAccountControl(){
+                let userDropdown = document.createElement('div')
             userDropdown.classList.add("user-profile-menu")
             userDropdown.innerHTML= `
                 <div class="dropdown">
@@ -103,8 +110,9 @@ document.addEventListener("DOMContentLoaded", e => {
                         <a href="#">Update Email</a>
                         <a href="#">Delete My Account</a>
                     </div>
-                </div>
-`
+                </div>`
+            }//f accountControl
+
             /* userDropdown.innerHTML=`
                <div class="dropdown">
                     <button class="btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -117,7 +125,7 @@ document.addEventListener("DOMContentLoaded", e => {
                     </div>
                 </div>
                       `*/
-            bodyHTML.appendChild(userDropdown)
+            // bodyHTML.appendChild(userDropdown)
                     
                       //   userInfo.addEventListener("click", e=>{
                           
@@ -212,11 +220,28 @@ document.addEventListener("DOMContentLoaded", e => {
                     }
                 })// userInfo eventL
             }
-            clickHandler()
+            // debugger
+            if (signedInUser.status === 401 || signedInUser.user.id === undefined){
+                
+                welcomeUser()
+
+                         
+            } else{
+                // debugger
+ 
+            fetchStudents()
+            fetchTeacher()
             fetchEvents()
-        }) // welcomeForm eventL
+            clickHandler()
+            renderAccountControl()
+            accountControl()
+            }
+        }) // welcomePage eventL
+// debugger
     } // welcomeUser fn          
+   
     welcomeUser()
+     
     
 
     //TODO- testing on Thursday with smaller seed-sample to be mindful of API call limits
@@ -232,15 +257,11 @@ document.addEventListener("DOMContentLoaded", e => {
         fetch(meetingsUrl, options)
     }
             
-    async function fetchStudents (name){
-        welcomePage.innerHTML =""
+    async function fetchStudents (){
         
         let response = await fetch(studentUrl)
         let data = await response.json()
-        
-
-
-        
+         
         let count = 0;
         let studentNode;
 
@@ -256,6 +277,7 @@ document.addEventListener("DOMContentLoaded", e => {
                 divRow.innerHTML = `<span class="student-name"> <img class="desk" src="https://i.dlpng.com/static/png/6363196_thumb.png">${student.name}</span>`
                 studentNode.appendChild(divRow)
                 studentWrapper.appendChild(studentNode)
+                currentUser(signedInUser, divRow)
             } else {
                 let column = document.querySelectorAll(".column-desk")[document.querySelectorAll(".column-desk").length - 1]
                 studentNode = document.createElement('div');
@@ -263,8 +285,11 @@ document.addEventListener("DOMContentLoaded", e => {
                 studentNode.dataset.id = `${student.id}`
                 studentNode.innerHTML = `<span class="student-name"> <img class="desk" src="https://i.dlpng.com/static/png/6363196_thumb.png">${student.name}</span>`
                 column.appendChild(studentNode)
+                currentUser(signedInUser, studentNode)
             }
             count++
+
+            
             
             // this code changed logged-in user's textContent color to green to represent logged-in status
             // if(student.name === name){
@@ -275,21 +300,24 @@ document.addEventListener("DOMContentLoaded", e => {
     }
 
     // this code changed logged-in user's textContent color to green to represent logged-in status
-    function currentUser(studentObj){
-        signedUser = studentObj
-        let div = document.createElement('div')
-        div.classList.add("student-desk")
-        div.dataset.id = studentObj.id
-        div.innerText= studentObj.name
-        studentUl.appendChild(div)
-        div.style.color = 'green'
+    function currentUser(signedInUser, div){
+        // signedUser = studentObj
+        // let div = document.createElement('div')
+        // div.classList.add("student-desk")
+        // div.dataset.id = studentObj.id
+        // div.innerText= studentObj.name
+        // studentUl.appendChild(div)
+        if (signedInUser.id){
+
+debugger
+            div.style.color = 'green'
+        }
     }
      
     studentWrapper.addEventListener("click", e=>{
         const meetingForm = document.getElementById("meeting_form")
         
         let id = parseInt(e.target.closest(".row").dataset.id)
-      
         
         async function fetchOneStudent (){
             let response = await fetch(studentUrl + "/" + id)
